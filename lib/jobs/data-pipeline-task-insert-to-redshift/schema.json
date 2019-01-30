@@ -1,0 +1,21 @@
+{
+  "name" : "insert-to-redshift",
+  "description" : "Insert data gotten from s3 into a data warehouse",
+  "version" : "0.0.1",
+  "configuration" : {
+    "s3" : {
+      "accessKeyId": "",
+      "secretAccessKey": "",
+      "Bucket": "",
+      "defaultPath": ""
+    },
+    "warehouse": {
+      "type" : "",
+      "database": "",
+      "host": "",
+      "port": 3307,
+      "user": "",
+      "password": ""
+    }
+  }
+}

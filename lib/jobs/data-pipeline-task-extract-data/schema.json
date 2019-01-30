@@ -1,0 +1,30 @@
+{
+  "name" : "extract-from-datasource",
+  "description" : "Extract data from various data source",
+  "version" : "0.0.1",
+  "configuration" : {
+    "redisSource": {
+      "host": "",
+      "port": null,
+      "password": null
+    },
+    "dataSources" : {
+      "type" : "",
+      "fields" : [],
+      "table" : "",
+      "limit" : 1000,
+      "primary_key" : "id",
+      "incremental_key" : "created_at",
+      "condition": {
+
+      },
+      "credentials" : {
+        "database": "sd",
+        "host": "",
+        "port": 3307,
+        "user": "root",
+        "password": ""
+      }
+    }
+  }
+}

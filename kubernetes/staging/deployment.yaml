@@ -1,0 +1,97 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: snitch
+  name: snitch
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: snitch
+        tier: backend
+        env: prod
+    spec:
+      imagePullSecrets:
+        - name: registrypullsecret
+      containers:
+      - env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: PIPELINE_ID
+          valueFrom:
+            secretKeyRef:
+              key: pipelineid
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              key: redisurl
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_1_DATABASE_TYPE
+          valueFrom:
+            secretKeyRef:
+              key: dbtype1
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_1_DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: dburl1
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_2_DATABASE_TYPE
+          valueFrom:
+            secretKeyRef:
+              key: dbtype2
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_2_DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: dburl2
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_3_DATABASE_TYPE
+          valueFrom:
+            secretKeyRef:
+              key: dbtype3
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_3_DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: dburl3
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_DESTINATION_DATABASE_TYPE
+          valueFrom:
+            secretKeyRef:
+              key: dbtypedest
+              name: snitch-staging-config
+        - name: DATA_PIPELINE_DESTINATION_DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: dburldest
+              name: snitch-staging-config
+        - name: LOG_LEVEL
+          value: info
+        - name: NODE_ENV
+          value: staging
+        image: atlasmoneyhub/atlas-datapipeline-service
+        imagePullPolicy: "Always"
+        name: snitch
+        command:
+        - "/bin/bash"
+        - "-c"
+        - "npm start"
+        ports:
+        - containerPort: 3016
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi

@@ -1,0 +1,11 @@
+{
+  "name" : "upload-from-s3",
+  "description" : "Upload JSON data to s3",
+  "version" : "0.0.1",
+  "configuration" : {
+    "accessKeyId": "",
+    "secretAccessKey": "",
+    "Bucket": "",
+    "defaultPath": ""
+  }
+}
